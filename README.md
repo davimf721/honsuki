@@ -1,16 +1,17 @@
 # 📚 Honsuki - Seu Refúgio Literário Pessoal
 "Transformando páginas em memórias e sonhos em próximos capítulos"
+#
 ✨ Explore, Registre e Compartilhe sua jornada literária em um espaço feito para quem vive entre linhas e histórias.
 
-🌟 Destaques
+## 🌟 Destaques
 
-📖 Listas Inteligentes: Organize livros entre "Quero Ler" e "Já Li" com drag-and-drop
-🖋️ Diário de Resenhas: Escreva análises profundas com markdown e sistema de avaliação por estrelas
-🌐 Biblioteca Universal: Busque automaticamente dados de 50+ milhões de livros via Google Books API
-📢 Comunidade Leitora: Receba recomendações e descubra novas pérolas literárias 
-📊 Insights Pessoais: Estatísticas de leitura e metas personalizadas (em breve!)
+- 📖 Listas Inteligentes: Organize livros entre "Quero Ler" e "Já Li" com drag-and-drop <br>
+- 🖋️ Diário de Resenhas: Escreva análisesprofundas com markdown e sistema de avaliação por estrelas<br>
+- 🌐 Biblioteca Universal: Busque automaticamente dados de 50+ milhões de livros via Google Books API<br>
+- 📢 Comunidade Leitora: Receba recomendações e descubra novas pérolas literárias <br>
+- 📊 Insights Pessoais: Estatísticas de leitura e metas personalizadas (em breve!)<br>
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 Frontend:
 - React
@@ -22,16 +23,16 @@ Backend:
 - Firebase
 - Express
 
-🤝 Como Contribuir
+## 🤝 Como Contribuir
 
 Encontrou um bug? Tem uma ideia incrível?
 
-Fork o projeto 📌
-Crie sua branch (git checkout -b feature/nova-magia) ✨ '
-Faça commit das mudanças (git commit -m 'Adiciona feitiço de busca melhorado') 🔮
-Push para a branch (git push origin feature/nova-magia) 🚀
-Abra um Pull Request! 📬
-📄 Licença
+Fork o projeto 📌<br>
+Crie sua branch (git checkout -b feature/nova-magia) ✨<br>
+Faça commit das mudanças (git commit -m 'Adiciona feitiço de busca melhorado') 🔮<br>
+Push para a branch (git push origin feature/nova-magia) 🚀<br>
+Abra um Pull Request! 📬<br>
+## 📄 Licença
 
 Distribuído sob licença MIT. Veja LICENSE para mais detalhes.
 #
