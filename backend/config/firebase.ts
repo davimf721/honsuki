@@ -1,9 +1,16 @@
-// src/config/firebase.ts
-import admin from 'firebase-admin';
-import serviceAccount from '../../serviceAccountKey.json';
+import {initializeApp} from "firebase/app";
+import {getFirestore} from "firebase/firestore";
+
+
+
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
-});
+  credential: admin.credential.cert({
+    projectID: process.env.FIREBASE_PROJECT_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g,'\n'),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL
+  })
+})
 
-export const db = admin.firestore();
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
