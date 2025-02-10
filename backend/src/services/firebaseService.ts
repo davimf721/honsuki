@@ -4,8 +4,15 @@ import fs from "fs";
 
 dotenv.config();
 
-const serviceAccount = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS || "", "utf-8"));
+let serviceAccount;
 
+if (process.env.FIREBASE_CREDENTIALS) {
+    // Quando a variável de ambiente estiver definida (no deploy)
+    serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+} else {
+    // Para ambiente de desenvolvimento local, se o arquivo existir
+    serviceAccount = JSON.parse(fs.readFileSync('./firebase-key.json', 'utf-8'));
+}
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
