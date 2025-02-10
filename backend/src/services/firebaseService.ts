@@ -14,14 +14,10 @@ type ServiceAccount = {
 
 let serviceAccount: ServiceAccount;
 
-if (process.env.FIREBASE_CREDENTIALS_ENCODED) {
+if (process.env.NODE_ENV === 'production') {
 
     const encoded = process.env.FIREBASE_CREDENTIALS_ENCODED!;
-
-
     const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
-
-
     serviceAccount = JSON.parse(decoded) as ServiceAccount;
 } else {
 
