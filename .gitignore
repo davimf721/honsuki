@@ -1,3 +1,26 @@
-.idea/
+# Firebase & Sensíveis
+new-firebase-key.json
+.env
+env/
+.firebase/
+
+# Dependências
 node_modules/
-backend/new-firebase-key.json
+
+# Builds e logs
+dist/
+*.log
+*.tsbuildinfo
+
+# IDE/Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Sistema
+.DS_Store
+Thumbs.db
