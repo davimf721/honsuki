@@ -1,4 +1,3 @@
 .idea/
 node_modules/
-backend/src/services/firebaseService.ts
 backend/firebase-key.json
