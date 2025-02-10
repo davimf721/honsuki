@@ -1,10 +1,5 @@
 import admin from "firebase-admin";
-import dotenv from "dotenv";
-import fs from "fs";
 import { Buffer } from 'buffer';
-
-dotenv.config();
-
 
 type ServiceAccount = {
     projectId: string;
@@ -12,21 +7,38 @@ type ServiceAccount = {
     privateKey: string;
 };
 
-let serviceAccount: ServiceAccount;
-
-if (process.env.NODE_ENV === 'production') {
-
-    const encoded = process.env.FIREBASE_CREDENTIALS_ENCODED!;
-    const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
-    serviceAccount = JSON.parse(decoded) as ServiceAccount;
-} else {
-
-    serviceAccount = JSON.parse(
-        fs.readFileSync('./new-firebase-key.json', 'utf-8')
-    ) as ServiceAccount;
+// Verificação obrigatória em produção
+if (process.env.NODE_ENV === 'production' && !process.env.FIREBASE_CREDENTIALS_ENCODED) {
+    throw new Error('Variável FIREBASE_CREDENTIALS_ENCODED não definida!');
 }
 
+const getFirebaseConfig = (): ServiceAccount => {
+    if (process.env.NODE_ENV === 'production') {
+        const encoded = process.env.FIREBASE_CREDENTIALS_ENCODED!;
+        const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
 
-const db: admin.firestore.Firestore = admin.firestore();
+        // Validação extra do JSON
+        try {
+            return JSON.parse(decoded) as ServiceAccount;
+        } catch (error) {
+            // Verifica se é uma instância de Error
+            if (error instanceof Error) {
+                throw new Error(`Erro ao parsear credenciais: ${error.message}`);
+            }
 
-export { db };
+            // Caso seja outro tipo de erro (ex: string)
+            throw new Error(`Erro desconhecido ao parsear credenciais: ${String(error)}`);
+        }
+    }
+
+    // Modo desenvolvimento
+    return require('../new-firebase-key.json');
+};
+
+// Inicialização garantida
+const serviceAccount = getFirebaseConfig();
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+export const db = admin.firestore();
