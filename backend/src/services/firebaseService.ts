@@ -11,7 +11,7 @@ if (process.env.FIREBASE_CREDENTIALS) {
     serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 } else {
     // Para ambiente de desenvolvimento local, se o arquivo existir
-    serviceAccount = JSON.parse(fs.readFileSync('./firebase-key.json', 'utf-8'));
+    serviceAccount = JSON.parse(fs.readFileSync('./new-firebase-key.json', 'utf-8'));
 }
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
