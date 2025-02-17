@@ -2,35 +2,38 @@ import axios from 'axios';
 import { db } from '../services/firebaseService';
 import admin from "firebase-admin";
 
-// Cache simples em memória
+
 const bookCache = new Map<string, any>();
 
 export const searchBooksAPI = async (query: string) => {
-    // Verifica cache primeiro
     if (bookCache.has(query)) {
         return bookCache.get(query);
     }
 
     try {
-        // Tenta buscar por ISBN primeiro
         let response = await axios.get(
             `https://www.googleapis.com/books/v1/volumes?q=isbn:${query}`
         );
 
-        // Fallback para busca geral
+
         if (response.data.totalItems === 0) {
             response = await axios.get(
                 `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
             );
         }
 
-        const item = response.data.items?.[0]?.volumeInfo;
-
-        if (!item) {
-            throw new Error("Livro não encontrado");
+        if (response.data.totalItems === 0 || !response.data.items?.[0]?.volumeInfo) {
+            throw new Error("Nenhum resultado encontrado");
         }
 
-        // Estrutura padronizada
+        const item = response.data.items[0].volumeInfo;
+
+
+        if (!item.title) {
+            throw new Error("Título do livro não encontrado");
+        }
+
+
         const bookData = {
             title: item.title || "Título desconhecido",
             author: item.authors?.join(", ") || "Autor desconhecido",
@@ -40,7 +43,7 @@ export const searchBooksAPI = async (query: string) => {
             thumbnail: item.imageLinks?.thumbnail || "",
         };
 
-        // Atualiza cache
+
         bookCache.set(query, bookData);
 
         return bookData;
@@ -50,6 +53,17 @@ export const searchBooksAPI = async (query: string) => {
 };
 
 export const addBookToDB = async (bookData: any) => {
+    if (bookData.isbn) {
+        const snapshot = await db.collection('books')
+            .where('isbn', '==', bookData.isbn)
+            .limit(1)
+            .get();
+
+        if (!snapshot.empty) {
+            throw new Error("Livro já cadastrado");
+        }
+    }
+
     const docRef = await db.collection('books').add({
         ...bookData,
         status: 'to-read',
