@@ -1,5 +1,6 @@
 import express from 'express';
-import bookRoutes from './routes/routes';
+
+import mainRouter from './routes/routes';
 
 const app = express();
 
@@ -7,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 // Configuração das rotas
-app.use('/api', bookRoutes);
+app.use(mainRouter);
 
 // Inicialização do servidor
 const PORT = process.env.PORT || 3001;

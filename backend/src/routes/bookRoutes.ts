@@ -10,11 +10,9 @@ router.get('/books', async (req: Request, res: Response) => {
             id: doc.id,
             ...doc.data()
         }));
-
         return res.status(200).json(books);
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : "Erro desconhecido";
-        return res.status(500).json({ error: errorMessage });
+    } catch (error) {
+        return res.status(500).json({ error: "Erro ao buscar livros" });
     }
 });
 
