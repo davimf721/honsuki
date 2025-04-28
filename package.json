@@ -17,8 +17,9 @@
     "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.19.2",
-    "firebase-admin": "^13.1.0"
+    "express": "5.1.0",
+    "firebase-admin": "^13.1.0",
+    "honsuki": "file:"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
