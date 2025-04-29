@@ -30,6 +30,31 @@ router.post('/books', async (req: Request, res: Response) => {
     }
 });
 
+router.post('/books/add-from-api', async (req: Request, res: Response) => {
+    try {
+        const { query } = req.body;
+        
+        if (!query) {
+            return res.status(400).json({ error: "Query de busca necessária" });
+        }
+        
+        // Busca o livro na API externa
+        const bookData = await searchBooksAPI(query);
+        
+        // Adiciona o livro ao banco de dados
+        const bookId = await addBookToDB(bookData);
+        
+        res.status(201).json({ 
+            id: bookId, 
+            message: "Livro adicionado com sucesso",
+            book: bookData
+        });
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Erro desconhecido";
+        return res.status(500).json({ error: errorMessage });
+    }
+});
+
 // Buscar livro na API externa
 router.get('/search', async (req: Request, res: Response) => {
     try {
