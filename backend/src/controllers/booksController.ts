@@ -41,6 +41,11 @@ export const searchBooksAPI = async (query: string) => {
                 (id: any) => id.type === "ISBN_13"
             )?.identifier || null,
             thumbnail: item.imageLinks?.thumbnail || "",
+            description: item.description || "Sem descrição disponível",
+            pageCount: item.pageCount || 0,
+            publishedDate: item.publishedDate || "Data desconhecida",
+            publisher: item.publisher || "Editora desconhecida",
+            categories: item.categories || []
         };
 
 
